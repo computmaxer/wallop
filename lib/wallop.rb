@@ -100,8 +100,9 @@ module Wallop
   def self.lineup
     lineup = JSON.parse(open(hdhomerun_lineup_url).read)
     lineup.each do |l|
-      if config['channel_logos'][l['GuideNumber']]
-        l['LogoUrl'] = "#{request_url}/logos/#{config['channel_logos'][l['GuideNumber']]}"
+      channel_number = l['GuideNumber'].sub(".", "_")
+      if config['channel_logos'][channel_number]
+        l['LogoUrl'] = "#{request_url}/logos/#{config['channel_logos'][channel_number]}"
       else
         l['LogoUrl'] = nil
       end
